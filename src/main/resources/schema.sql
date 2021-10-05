@@ -1,0 +1,1 @@
+CREATE TABLE moneda (id SERIAL PRIMARY KEY, nombre CHAR(3), tipo_cambio  DECIMAL(3,2));
