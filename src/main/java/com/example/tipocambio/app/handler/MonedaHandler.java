@@ -12,11 +12,11 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import com.example.tipocambio.app.SpringBootTipocambioApirestApplication;
 import com.example.tipocambio.app.models.documents.Moneda;
 import com.example.tipocambio.app.models.documents.Solicitud;
 import com.example.tipocambio.app.models.services.MonedaService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -101,5 +101,32 @@ public class MonedaHandler {
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(service.save(m), Moneda.class));
 	}
+	
+	
+	
+	  public Mono<ServerResponse> nuevoactualizar(ServerRequest request){
+	  	  
+		  Flux<Moneda> monedas = request.bodyToFlux(Moneda.class);
+		  
+		  Flux<Moneda> monedasDB =  monedas.flatMap(this::filtrarMonedas)
+			  		.flatMap(service::save);
+		  
+		  return ServerResponse.ok()
+					.contentType(MediaType.APPLICATION_JSON)
+					.body(monedasDB, Moneda.class);  
+	  
+	  }
+	  
+	  private Mono<Moneda> filtrarMonedas(Moneda moneda) {  
+		  
+		  return service.findByNombre(moneda.getNombre())
+				  .map(mon -> {
+					  Moneda newMoneda = new Moneda(mon.getNombre(), moneda.getTipoCambio());
+					  newMoneda.setId(mon.getId());
+					  return newMoneda;
+				  })
+		          .defaultIfEmpty(moneda);
+	 }
+	 
 
 }

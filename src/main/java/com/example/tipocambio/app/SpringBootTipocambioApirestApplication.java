@@ -1,5 +1,6 @@
 package com.example.tipocambio.app;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +29,24 @@ public class SpringBootTipocambioApirestApplication implements CommandLineRunner
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
+		
+		List<Integer> arreglo = Arrays.asList(1, 21, 8, 13, 6, 15, 7, 15);
+		
+		
+		List<Integer> arregloAux = new ArrayList<>();
+		for (int i=0; i<arreglo.size();i++) {
+			if (arreglo.get(i)%2>0) arregloAux.add(arreglo.get(i));
+		}
+			
+		
+		arregloAux.sort(null);
+		
+		log.info(arregloAux.toString());
+		
+		
+		
 		
 		List<Moneda> monedas = Arrays.asList(
 		 new Moneda("PEN", 1.00),

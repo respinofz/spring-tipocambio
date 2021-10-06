@@ -15,10 +15,11 @@ public class RouterFunctionConfig {
 	@Bean
 	public RouterFunction<ServerResponse> routes(MonedaHandler handler){
 		
-		return RouterFunctions.route(RequestPredicates.GET("/api/tipocambio"), request -> handler.listar(request))
+		return RouterFunctions.route(RequestPredicates.GET("/api/tipocambio"), request -> handler.listar(request))			
 				.andRoute(RequestPredicates.GET("/api/tipocambio/procesar"), request -> handler.procesar(request))
 				.andRoute(RequestPredicates.GET("/api/tipocambio/{nombre}"), request -> handler.ver(request))
-				.andRoute(RequestPredicates.POST("/api/tipocambio/actualizar/{nombre}"), request -> handler.editar(request)); 
+				.andRoute(RequestPredicates.POST("/api/tipocambio/actualizar/{nombre}"), request -> handler.editar(request))
+				.andRoute(RequestPredicates.POST("/api/tipocambio/grabaroactualizar"), request -> handler.nuevoactualizar(request)); 
 	}
 
 }

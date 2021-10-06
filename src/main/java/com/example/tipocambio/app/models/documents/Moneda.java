@@ -19,11 +19,12 @@ public class Moneda implements Serializable {
 	private String nombre;
 	private Double tipoCambio;
 	
+	
 	public Moneda(String nombre, Double tipoCambio) {
 		this.nombre = nombre;
 		this.tipoCambio = tipoCambio;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
